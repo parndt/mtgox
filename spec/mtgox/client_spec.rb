@@ -7,6 +7,7 @@ describe MtGox::Client do
       config.key = "key"
       config.secret = "secret"
     end
+    @client.stub(:nonce).and_return(NONCE_STUB_VALUE)
   end
 
   describe '#address' do

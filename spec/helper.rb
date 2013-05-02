@@ -38,15 +38,6 @@ def fixture(file)
   File.new(fixture_path + '/' + file)
 end
 
-module MtGox
-  module Request
-    private
-    def add_nonce(options)
-      options.merge!({nonce: 1321745961249676})
-    end
-  end
-end
-
 def test_headers(body=test_body)
   signature = Base64.strict_encode64(
     OpenSSL::HMAC.digest 'sha512',
@@ -56,6 +47,7 @@ def test_headers(body=test_body)
   {'Rest-Key' => MtGox.key, 'Rest-Sign' => signature}
 end
 
+NONCE_STUB_VALUE = 1321745961249676
 def test_body(options={})
-  options.merge!({nonce: 1321745961249676}).collect{|k, v| "#{k}=#{v}"} * '&'
+  options.merge!(nonce: NONCE_STUB_VALUE).collect{|k, v| "#{k}=#{v}"} * '&'
 end

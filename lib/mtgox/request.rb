@@ -44,7 +44,11 @@ module MtGox
     end
 
     def add_nonce(options)
-      options.merge!({nonce: (Time.now.to_f * 1000000).to_i})
+      options.merge!(nonce: nonce)
+    end
+
+    def nonce
+      (Time.now.to_f * 1000000).to_i
     end
   end
 end
